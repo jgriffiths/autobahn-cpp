@@ -895,10 +895,12 @@ inline void wamp_session::process_error(wamp_message&& message)
     auto error = message.field<std::string>(4);
 
     // Arguments|list
+    std::vector<msgpack::object> args;
     if (message.size() > 5) {
         if (!message.is_field_type(5, msgpack::type::ARRAY)) {
             throw protocol_error("invalid ERROR message structure - Arguments must be a list");
         }
+        args = message.field<std::vector<msgpack::object>>(5);
     }
 
     // ArgumentsKw|list
@@ -933,7 +935,7 @@ inline void wamp_session::process_error(wamp_message&& message)
 
                 if (call_itr != m_calls.end()) {
                     // FIXME: Forward all error info.
-                    call_itr->second->result().set_exception(boost::copy_exception(std::runtime_error(error)));
+                    call_itr->second->result().set_exception(boost::copy_exception(call_error(error, args)));
                     m_calls.erase(call_itr);
                 } else {
                     throw protocol_error("bogus ERROR message for non-pending CALL request ID: " + error);
