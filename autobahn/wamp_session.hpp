@@ -86,6 +86,25 @@ event at the router, which in turn will dispatch the event to all eligible and
 authorized subscribes to the topic.
  */
 
+class call_error : public std::runtime_error
+{
+public:
+    typedef std::vector<msgpack::object> args_type;
+    call_error(const std::string& error, const args_type& args) :
+        std::runtime_error(error),
+        m_args(args)
+    {
+    }
+
+    const args_type& get_args() const
+    {
+        return m_args;
+    }
+
+private:
+    args_type m_args;
+};
+
 /// Representation of a WAMP session.
 class wamp_session :
         public wamp_transport_handler,
