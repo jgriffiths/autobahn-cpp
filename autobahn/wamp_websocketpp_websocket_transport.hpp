@@ -80,6 +80,8 @@ namespace autobahn {
 
         virtual bool is_connected() const override;
 
+        virtual bool ping(const std::string& payload) const;
+
     private:
         virtual bool is_open() const override;
         virtual void close() override;

@@ -88,6 +88,16 @@ namespace autobahn {
 		return is_open() && !m_done;
 	}
 
+    template <class Config>
+    inline bool wamp_websocketpp_websocket_transport<Config>::ping(const std::string& payload) const
+    {
+        websocketpp::lib::error_code ec;
+        auto con = m_client.get_con_from_hdl(m_hdl, ec);
+        if (!ec)
+            con->ping(payload, ec);
+        return ec == websocketpp::lib::error_code{};
+    }
+
     // The open handler will signal that we are ready to start sending telemetry
     template <class Config>
     inline void wamp_websocketpp_websocket_transport<Config>::on_ws_open(websocketpp::connection_hdl) {
