@@ -170,6 +170,8 @@ namespace autobahn {
     {
         websocketpp::lib::error_code ec;
         m_client.send(m_hdl, payload, len, websocketpp::frame::opcode::binary, ec);
+        if (ec)
+            throw websocketpp::exception(ec);
     }
 
     template <class Config>
