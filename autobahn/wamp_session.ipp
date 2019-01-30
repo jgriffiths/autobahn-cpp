@@ -420,7 +420,7 @@ inline boost::future<wamp_call_result> wamp_session::call(
             send_message(std::move(*message));
             m_calls.emplace(request_id, call);
         } catch (const std::exception& e) {
-            call->result().set_exception(boost::copy_exception(e));
+            call->result().set_exception(boost::current_exception());
         }
     });
 
@@ -455,7 +455,7 @@ inline boost::future<wamp_call_result> wamp_session::call(
             send_message(std::move(*message));
             m_calls.emplace(request_id, call);
         } catch (const std::exception& e) {
-            call->result().set_exception(boost::copy_exception(e));
+            call->result().set_exception(boost::current_exception());
         }
     });
 
@@ -492,7 +492,7 @@ inline boost::future<wamp_call_result> wamp_session::call(
             send_message(std::move(*message));
             m_calls.emplace(request_id, call);
         } catch (const std::exception& e) {
-            call->result().set_exception(boost::copy_exception(e));
+            call->result().set_exception(boost::current_exception());
         }
     });
 
@@ -1364,19 +1364,19 @@ inline void wamp_session::process_unregistered(wamp_message&& message)
 inline void wamp_session::send_message(wamp_message&& message, bool session_established)
 {
     if (!m_running) {
-        throw protocol_error("session not running");
+        BOOST_THROW_EXCEPTION(protocol_error("session not running"));
     }
 
-	if (!m_transport) {
-        throw no_transport_error();
+    if (!m_transport) {
+        BOOST_THROW_EXCEPTION(no_transport_error());
     }
 
-	if (!m_transport->is_connected()) {
-		throw no_transport_error();
-	}
+    if (!m_transport->is_connected()) {
+	BOOST_THROW_EXCEPTION(no_transport_error());
+    }
 
     if (session_established && !m_session_id) {
-        throw no_session_error();
+        BOOST_THROW_EXCEPTION(no_session_error());
     }
 
     m_transport->send_message(std::move(message));
