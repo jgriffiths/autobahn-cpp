@@ -82,6 +82,9 @@ namespace autobahn {
 
         virtual bool ping(const std::string& payload) const;
 
+        template <class T>
+        bool set_socket_option(T option) const;
+
     private:
         virtual bool is_open() const override;
         virtual void close() override;
