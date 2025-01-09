@@ -77,7 +77,7 @@ int main(int argc, char** argv)
 
         std::cerr << "Connecting to realm: " << parameters->realm() << std::endl;
 
-        boost::asio::io_service io;
+        boost::asio::io_context io;
         auto transport = std::make_shared<autobahn::wamp_tcp_transport>(
                 io, parameters->rawsocket_endpoint(), true);
 

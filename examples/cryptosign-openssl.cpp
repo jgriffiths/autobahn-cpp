@@ -61,7 +61,7 @@ public:
   EVP_PKEY *m_private_key = nullptr;
 
   auth_wamp_session(
-      boost::asio::io_service& io,
+      boost::asio::io_context& io,
       bool debug_enabled,
       const std::vector<uint8_t>& private_key) :
         autobahn::wamp_session(io, debug_enabled)
@@ -104,7 +104,7 @@ int main(int argc, char** argv)
 
         std::cerr << "Connecting to realm: " << parameters->realm() << std::endl;
 
-        boost::asio::io_service io;
+        boost::asio::io_context io;
         bool debug = parameters->debug();
 
         client ws_clinet;

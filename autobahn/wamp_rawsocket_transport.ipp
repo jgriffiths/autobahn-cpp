@@ -42,7 +42,7 @@ namespace autobahn {
 
 template <class Socket>
 wamp_rawsocket_transport<Socket>::wamp_rawsocket_transport(
-            boost::asio::io_service& io_service,
+            boost::asio::io_context& io_service,
             const endpoint_type& remote_endpoint,
             bool debug_enabled)
     : wamp_transport()

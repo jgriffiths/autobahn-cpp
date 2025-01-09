@@ -35,7 +35,7 @@
 namespace autobahn {
 
 inline wamp_tcp_transport::wamp_tcp_transport(
-        boost::asio::io_service& io_service,
+        boost::asio::io_context& io_service,
         const boost::asio::ip::tcp::endpoint& remote_endpoint,
         bool debug_enabled)
     : wamp_rawsocket_transport<boost::asio::ip::tcp::socket>(

@@ -64,7 +64,7 @@ int main(int argc, char** argv)
         log(argv[1]);
         log(argv[1]);
 
-        boost::asio::io_service io;
+        boost::asio::io_context io;
 
         bool debug = true;
 

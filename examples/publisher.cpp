@@ -46,7 +46,7 @@ int main(int argc, char** argv)
     try {
         auto parameters = get_parameters(argc, argv);
 
-        boost::asio::io_service io;
+        boost::asio::io_context io;
         bool debug = parameters->debug();
 
         auto transport = std::make_shared<autobahn::wamp_tcp_transport>(

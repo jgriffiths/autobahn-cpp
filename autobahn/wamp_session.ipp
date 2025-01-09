@@ -62,7 +62,7 @@
 namespace autobahn {
 
 inline wamp_session::wamp_session(
-        boost::asio::io_service& io_service,
+        boost::asio::io_context& io_service,
         bool debug_enabled)
     : m_debug_enabled(debug_enabled)
     , m_io_service(io_service)
